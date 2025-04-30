@@ -82,8 +82,8 @@ export default class ReportDetailPage {
 
     if (this.#map) {
       const reportCoordinate = [story?.lat ?? '', story?.lon ?? ''];
-      const markerOptions = { alt: story.title };
-      const popupOptions = { content: story.title };
+      const markerOptions = { alt: story.name };
+      const popupOptions = { content: story.name };
       this.#map.changeCamera(reportCoordinate);
       this.#map.addMarker(reportCoordinate, markerOptions, popupOptions);
     }
