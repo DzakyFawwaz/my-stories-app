@@ -181,34 +181,30 @@ export function generateReportCommentItemTemplate({ photoUrlCommenter, nameComme
 export function generateStoryDetailTemplate({
   title,
   description,
-  damageLevel,
   evidenceImages,
   latitudeLocation,
   longitudeLocation,
   storyName,
+  location,
   createdAt,
 }) {
   const createdAtFormatted = showFormattedDate(createdAt, 'id-ID');
-  // const imagesHtml = evidenceImages.reduce(
-  //   (accumulator, evidenceImage) =>
-  //     accumulator.concat(generateReportDetailImageTemplate(evidenceImage, title)),
-  //   '',
-  // );
+
   const imagesHtml = evidenceImages;
 
   return `
     <div class="report-detail__header">
       <h1 id="title" class="report-detail__title">${title}</h1>
 
-      <div class="report-detail__more-info">
+        <div class="report-detail__more-info">
         <div class="report-detail__more-info__inline">
           <div id="createdat" class="report-detail__createdat" data-value="${createdAtFormatted}"><i class="fas fa-calendar-alt"></i></div>
+          <div id="location-place-name" class="report-detail__location__place-name" data-value="${location.placeName}"><i class="fas fa-map"></i></div>
         </div>
         <div class="report-detail__more-info__inline">
-          <div id="location-latitude" class="report-detail__location__latitude" data-value="${latitudeLocation}">Latitude:</div>
-          <div id="location-longitude" class="report-detail__location__longitude" data-value="${longitudeLocation}">Longitude:</div>
+          <div id="location-latitude" class="report-detail__location__latitude" data-value="${location.lat}">Latitude:</div>
+          <div id="location-longitude" class="report-detail__location__longitude" data-value="${location.lon}">Longitude:</div>
         </div>
-        <div id="author" class="report-detail__author" data-value="${storyName}">Dilaporkan oleh:</div>
       </div>
 
     </div>
@@ -216,7 +212,6 @@ export function generateStoryDetailTemplate({
     <div class="container">
       <div class="report-detail__images__container">
         <img src=${imagesHtml} id="images" class="report-detail__images" />
-        <div id="images" class="report-detail__images">${imagesHtml}</div>
       </div>
     </div>
 
@@ -228,13 +223,15 @@ export function generateStoryDetailTemplate({
             ${description}
           </div>
         </div>
-        <div class="report-detail__body__map__container">
-          <h2 class="report-detail__map__title">Peta Lokasi</h2>
-          <div class="report-detail__map__container">
-            <div id="map" class="report-detail__map"></div>
-            <div id="map-loading-container"></div>
-          </div>
-        </div>
+
+            <div class="report-detail__body__map__container">
+              <h2 class="report-detail__map__title">Peta Lokasi</h2>
+              <div class="report-detail__map__container">
+                <div id="map" class="report-detail__map"></div>
+                <div id="map-loading-container"></div>
+              </div>
+            </div>
+     
   
         <hr>
   

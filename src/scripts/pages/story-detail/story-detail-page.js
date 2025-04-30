@@ -9,12 +9,14 @@ import {
   generateSaveReportButtonTemplate,
 } from '../../templates';
 import { createCarousel } from '../../utils';
+import Map from '../../utils/map';
 import ReportDetailPresenter from './story-detail-presenter';
 import { parseActivePathname } from '../../routes/url-parser';
 import * as CityCareAPI from '../../data/api';
 
 export default class ReportDetailPage {
   #presenter = null;
+  #map = null;
   #form = null;
 
   async render() {
@@ -70,13 +72,21 @@ export default class ReportDetailPage {
       longitudeLocation: story.lon,
       storyName: story.name,
       createdAt: story.createdAt,
+      location: story.location,
     });
 
-    // Carousel images
-    createCarousel(document.getElementById('images'));
-
     // Map
-    await this.#presenter.showReportDetailMap();
+    if (story?.lat && story?.lon) {
+      await this.#presenter.showReportDetailMap();
+    }
+
+    if (this.#map) {
+      const reportCoordinate = [story?.lat ?? '', story?.lon ?? ''];
+      const markerOptions = { alt: story.title };
+      const popupOptions = { content: story.title };
+      this.#map.changeCamera(reportCoordinate);
+      this.#map.addMarker(reportCoordinate, markerOptions, popupOptions);
+    }
 
     // Actions buttons
     this.#presenter.showSaveButton();
@@ -122,6 +132,9 @@ export default class ReportDetailPage {
 
   async initialMap() {
     // TODO: map initialization
+    this.#map = await Map.build('#map', {
+      zoom: 15,
+    });
   }
 
   #setupForm() {
