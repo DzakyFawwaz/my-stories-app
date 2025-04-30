@@ -498,8 +498,8 @@ header {
 .report-detail__header {
   padding-block: 80px;
   min-height: 600px;
-  background-image: var(--primary-color);
-  /* background-image: url('../public/images/orange-background.png'); */
+  /* background-image: var(--primary-color); */
+  background-image: url('../public/images/orange-background.png');
   background-repeat: no-repeat;
   background-size: cover;
   background-position: top;
@@ -756,8 +756,8 @@ header {
 /* NEW REPORT FORM */
 .new-report__header {
   padding-block: 70px;
-  background-color: #d9770626;
-  /* background-image: url('../public/images/orange-background.png'); */
+  /* background-color: #d9770626; */
+  background-image: url('../public/images/orange-background.png');
   background-repeat: no-repeat;
   background-size: cover;
   background-position: top;
