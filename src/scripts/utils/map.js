@@ -9,6 +9,10 @@ export default class Map {
   #zoom = 5;
   #map = null;
 
+  addMapEventListener(eventName, callback) {
+    this.#map.addEventListener(eventName, callback);
+  }
+
   static async getPlaceNameByCoordinate(latitude, longitude) {
     console.log({ longitude, latitude });
     try {
@@ -85,6 +89,8 @@ export default class Map {
       attribution:
         '&copy; <a href="https://www.openstreetmap.org/copyright" target="_blank">OpenStreetMap</a>',
     });
+
+    console.log({ selector, options });
 
     this.#map = map(document.querySelector(selector), {
       zoom: this.#zoom,

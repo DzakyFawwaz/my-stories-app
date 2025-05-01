@@ -10,11 +10,11 @@ const ENDPOINTS = {
   // Report
   STORY_LIST: `${BASE_URL}/stories`,
   STORY_DETAIL: (id) => `${BASE_URL}/stories/${id}`,
-  STORE_NEW_REPORT: `${BASE_URL}/reports`,
+  STORE_NEW_STORY: `${BASE_URL}/stories`,
 
   // Report Comment
   REPORT_COMMENTS_LIST: (reportId) => `${BASE_URL}/reports/${reportId}/comments`,
-  STORE_NEW_REPORT_COMMENT: (reportId) => `${BASE_URL}/reports/${reportId}/comments`,
+  STORE_NEW_STORY_COMMENT: (reportId) => `${BASE_URL}/reports/${reportId}/comments`,
 
   // Report Comment
   SUBSCRIBE: `${BASE_URL}/notifications/subscribe`,
@@ -100,27 +100,16 @@ export async function getStoryById(id) {
   };
 }
 
-export async function storeNewReport({
-  title,
-  damageLevel,
-  description,
-  evidenceImages,
-  latitude,
-  longitude,
-}) {
+export async function storeNewReport({ description, photo, lat, lon }) {
   const accessToken = getAccessToken();
 
   const formData = new FormData();
-  formData.set('title', title);
-  formData.set('damageLevel', damageLevel);
   formData.set('description', description);
-  formData.set('latitude', latitude);
-  formData.set('longitude', longitude);
-  evidenceImages.forEach((evidenceImage) => {
-    formData.append('evidenceImages', evidenceImage);
-  });
+  formData.set('lat', lat);
+  formData.set('lon', lon);
+  formData.set('photo', photo);
 
-  const fetchResponse = await fetch(ENDPOINTS.STORE_NEW_REPORT, {
+  const fetchResponse = await fetch(ENDPOINTS.STORE_NEW_STORY, {
     method: 'POST',
     headers: { Authorization: `Bearer ${accessToken}` },
     body: formData,
@@ -151,7 +140,7 @@ export async function storeNewCommentByReportId(reportId, { body }) {
   const accessToken = getAccessToken();
   const data = JSON.stringify({ body });
 
-  const fetchResponse = await fetch(ENDPOINTS.STORE_NEW_REPORT_COMMENT(reportId), {
+  const fetchResponse = await fetch(ENDPOINTS.STORE_NEW_STORY_COMMENT(reportId), {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',

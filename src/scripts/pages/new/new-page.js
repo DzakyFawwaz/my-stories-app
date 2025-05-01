@@ -2,10 +2,14 @@ import NewPresenter from './new-presenter';
 import { convertBase64ToBlob } from '../../utils';
 import * as CityCareAPI from '../../data/api';
 import { generateLoaderAbsoluteTemplate } from '../../templates';
+import Camera from '../../utils/camera';
+import Map from '../../utils/map';
 
 export default class NewPage {
   #presenter;
   #form;
+  #map;
+  #camera;
   #isCameraOpen = false;
   #takenDocumentations = [];
 
@@ -16,8 +20,7 @@ export default class NewPage {
           <div class="container">
             <h1 class="new-report__header__title">Buat Cerita Baru</h1>
             <p class="new-report__header__description">
-              Silakan lengkapi formulir di bawah untuk membuat laporan baru.<br>
-              Pastikan laporan yang dibuat adalah valid.
+              Silakan lengkapi formulir di bawah untuk membuat cerita baru.<br>
             </p>
           </div>
         </div>
@@ -26,34 +29,21 @@ export default class NewPage {
       <section class="container">
         <div class="new-form__container">
           <form id="new-form" class="new-form">
-            <div class="form-control">
-              <label for="title-input" class="new-form__title__title">Judul Laporan</label>
-
-              <div class="new-form__title__container">
-                <input
-                  id="title-input"
-                  name="title"
-                  placeholder="Masukkan judul laporan"
-                  aria-describedby="title-input-more-info"
-                >
-              </div>
-              <div id="title-input-more-info">Pastikan judul laporan dibuat dengan jelas dan deskriptif dalam 1 kalimat.</div>
-            </div>
            
             <div class="form-control">
-              <label for="description-input" class="new-form__description__title">Keterangan</label>
+              <label for="description-input" class="new-form__description__title">Cerita</label>
 
               <div class="new-form__description__container">
                 <textarea
                   id="description-input"
                   name="description"
-                  placeholder="Masukkan keterangan lengkap laporan. Anda dapat menjelaskan apa kejadiannya, dimana, kapan, dll."
+                  placeholder="Cerita apa yang ingin anda bagikan?."
                 ></textarea>
               </div>
             </div>
             <div class="form-control">
-              <label for="documentations-input" class="new-form__documentations__title">Dokumentasi</label>
-              <div id="documentations-more-info">Anda dapat menyertakan foto sebagai dokumentasi.</div>
+              <label for="documentations-input" class="new-form__documentations__title">Gambar</label>
+              <div id="documentations-more-info">Tangkap gambar dan bagikan kepada teman anda.</div>
 
               <div class="new-form__documentations__container">
                 <div class="new-form__documentations__buttons">
@@ -64,7 +54,6 @@ export default class NewPage {
                     name="documentations"
                     type="file"
                     accept="image/*"
-                    multiple
                     aria-multiline="true"
                     aria-describedby="documentations-more-info"
                   >
@@ -73,7 +62,22 @@ export default class NewPage {
                   </button>
                 </div>
                 <div id="camera-container" class="new-form__camera__container">
-                  <p>Fitur ambil gambar dengan kamera akan segera hadir!</p>
+                   <video id="camera-video" class="new-form__camera__video">
+                      Video stream not available.
+                    </video>
+
+                    <canvas id="camera-canvas" class="new-form__camera__canvas"></canvas>
+
+    
+                    <div class="new-form__camera__tools">
+                      <select id="camera-select"></select>
+
+                       <div class="new-form__camera__tools_buttons">
+                      <button id="camera-take-button" class="btn" type="button">
+                        Ambil Gambar
+                      </button>
+                  </div>
+                    </div>
                 </div>
                 <ul id="documentations-taken-list" class="new-form__documentations__outputs"></ul>
               </div>
@@ -87,8 +91,8 @@ export default class NewPage {
                   <div id="map-loading-container"></div>
                 </div>
                 <div class="new-form__location__lat-lng">
-                  <input type="number" name="latitude" value="-6.175389">
-                  <input type="number" name="longitude" value="106.827139">
+                   <input type="number" name="latitude" value="-6.175389" disabled>
+                <input type="number" name="longitude" value="106.827139" disabled>
                 </div>
               </div>
             </div>
@@ -121,12 +125,10 @@ export default class NewPage {
       event.preventDefault();
 
       const data = {
-        title: this.#form.elements.namedItem('title').value,
-        damageLevel: this.#form.elements.namedItem('damageLevel').value,
         description: this.#form.elements.namedItem('description').value,
-        evidenceImages: this.#takenDocumentations.map((picture) => picture.blob),
-        latitude: this.#form.elements.namedItem('latitude').value,
-        longitude: this.#form.elements.namedItem('longitude').value,
+        photo: this.#takenDocumentations[0].blob,
+        lat: this.#form.elements.namedItem('latitude').value,
+        lon: this.#form.elements.namedItem('longitude').value,
       };
       await this.#presenter.postNewReport(data);
     });
@@ -148,25 +150,73 @@ export default class NewPage {
     document
       .getElementById('open-documentations-camera-button')
       .addEventListener('click', async (event) => {
+        console.log('OPENNN');
         cameraContainer.classList.toggle('open');
-
         this.#isCameraOpen = cameraContainer.classList.contains('open');
+
+        console.log('open camera', this.#isCameraOpen);
         if (this.#isCameraOpen) {
           event.currentTarget.textContent = 'Tutup Kamera';
+          this.#setupCamera();
+          this.#camera.launch();
 
           return;
         }
 
         event.currentTarget.textContent = 'Buka Kamera';
+        this.#camera.stop();
       });
   }
 
   async initialMap() {
-    // TODO: map initialization
+    this.#map = await Map.build('#map', {
+      zoom: 15,
+      locate: true,
+    });
+
+    const centerCoordinate = this.#map.getCenter();
+
+    this.#updateLatLngInput(centerCoordinate.latitude, centerCoordinate.longitude);
+
+    const draggableMarker = this.#map.addMarker(
+      [centerCoordinate.latitude, centerCoordinate.longitude],
+      { draggable: 'true' },
+    );
+    draggableMarker.addEventListener('move', (event) => {
+      const coordinate = event.target.getLatLng();
+      this.#updateLatLngInput(coordinate.lat, coordinate.lng);
+    });
+
+    this.#map.addMapEventListener('click', (event) => {
+      draggableMarker.setLatLng(event.latlng);
+    });
+
+    event.sourceTarget.flyTo(event.latlng);
+  }
+
+  #updateLatLngInput(latitude, longitude) {
+    this.#form.elements.namedItem('latitude').value = latitude;
+    this.#form.elements.namedItem('longitude').value = longitude;
   }
 
   #setupCamera() {
-    // TODO: camera initialization
+    console.log('setupCamera', this.#camera);
+
+    if (!this.#camera) {
+      this.#camera = new Camera({
+        video: document.getElementById('camera-video'),
+        cameraSelect: document.getElementById('camera-select'),
+        canvas: document.getElementById('camera-canvas'),
+      });
+    }
+
+    console.log('camera', this.#camera);
+
+    this.#camera.addCheeseButtonListener('#camera-take-button', async () => {
+      const image = await this.#camera.takePicture();
+      await this.#addTakenPicture(image);
+      await this.#populateTakenPictures();
+    });
   }
 
   async #addTakenPicture(image) {

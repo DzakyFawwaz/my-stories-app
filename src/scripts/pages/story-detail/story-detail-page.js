@@ -28,25 +28,7 @@ export default class ReportDetailPage {
         </div>
       </section>
       
-      <section class="container">
-        <hr>
-        <div class="report-detail__comments__container">
-          <div class="report-detail__comments-form__container">
-            <h2 class="report-detail__comments-form__title">Beri Tanggapan</h2>
-            <form id="comments-list-form" class="report-detail__comments-form__form">
-              <textarea name="body" placeholder="Beri tanggapan terkait laporan."></textarea>
-              <div id="submit-button-container">
-                <button class="btn" type="submit">Tanggapi</button>
-              </div>
-            </form>
-          </div>
-          <hr>
-          <div class="report-detail__comments-list__container">
-            <div id="story-detail-comments-list"></div>
-            <div id="comments-list-loading-container"></div>
-          </div>
-        </div>
-      </section>
+    
     `;
   }
 
@@ -56,13 +38,10 @@ export default class ReportDetailPage {
       apiModel: CityCareAPI,
     });
 
-    this.#setupForm();
-
     this.#presenter.showReportDetail();
   }
 
   async populateStoryDetailAndInitialMap(message, story) {
-    console.log({ story });
     document.getElementById('story-detail').innerHTML = generateStoryDetailTemplate({
       title: story.name,
       description: story.description,
@@ -89,8 +68,8 @@ export default class ReportDetailPage {
     }
 
     // Actions buttons
-    this.#presenter.showSaveButton();
-    this.addNotifyMeEventListener();
+    // this.#presenter.showSaveButton();
+    // this.addNotifyMeEventListener();
   }
 
   populateStoryDetailError(message) {
@@ -131,7 +110,6 @@ export default class ReportDetailPage {
   }
 
   async initialMap() {
-    // TODO: map initialization
     this.#map = await Map.build('#map', {
       zoom: 15,
     });

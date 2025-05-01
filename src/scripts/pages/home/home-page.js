@@ -12,15 +12,10 @@ export default class HomePage {
 
   async render() {
     return `
-      <section>
-        <div class="reports-list__map__container">
-          <div id="map" class="reports-list__map"></div>
-          <div id="map-loading-container"></div>
-        </div>
-      </section>
+    
 
       <section class="container">
-        <h1 class="section-title">Daftar Laporan Kerusakan</h1>
+        <h1 class="section-title">Cerita Teman Anda</h1>
 
         <div class="reports-list__container">
           <div id="sstories-list"></div>

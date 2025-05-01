@@ -21,7 +21,7 @@ export default class HomePresenter {
   async initialGalleryAndMap() {
     this.#view.showLoading();
     try {
-      await this.showReportsListMap();
+      // await this.showReportsListMap();
 
       const response = await this.#model.getAllStories();
 
