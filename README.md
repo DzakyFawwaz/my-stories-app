@@ -1,11 +1,12 @@
-# CityCare App Starter Project
+# CeritaIn
 
 ## Pengantar
 
-Starter project ini dirancang sebagai bahan pelajaran siswa di kelas [Belajar Pengembangan Web Intermediate](https://www.dicoding.com/academies/219).
+Project ini dirancang sebagai submission awal kelas [Belajar Pengembangan Web Intermediate](https://www.dicoding.com/academies/219).
 
 ## Deskripsi
-CityCareApp adalah aplikasi pelaporan kerusakan fasilitas umum yang memungkinkan warga Indonesia melaporkan masalah secara langsung kepada pemerintah kota. Dengan aplikasi ini, komunikasi antara warga dan pemerintah menjadi lebih efisien dalam menangani dan menindaklanjuti laporan kerusakan fasilitas umum.
+
+CeritaIn adalah platform inovatif yang memungkinkan pengguna untuk berbagi cerita, pengalaman, dan inspirasi. Dengan antarmuka yang ramah pengguna, CeritaIn dirancang untuk menjadi ruang kreatif di mana setiap orang dapat mengekspresikan diri mereka melalui tulisan. Jadilah bagian dari komunitas yang saling mendukung dan temukan cerita-cerita menarik dari berbagai perspektif.
 
 ## Prasyarat
 
@@ -15,13 +16,15 @@ CityCareApp adalah aplikasi pelaporan kerusakan fasilitas umum yang memungkinkan
 ## Instalasi
 
 - Lakukan unduh starter project c:
+
   ```bash
-  
+
   ```
 
 - Masuk ke direktori proyek:
+
   ```bash
-  cd citycareapp-starter-project
+  cd my-stories-app
   ```
 
 - Instal dependensi:
@@ -40,7 +43,7 @@ CityCareApp adalah aplikasi pelaporan kerusakan fasilitas umum yang memungkinkan
 ## Struktur Proyek
 
 ```plaintext
-citycareapp
+my-stories-app
 ├── package.json            # Informasi dependensi proyek
 ├── package-lock.json       # File lock untuk dependensi
 ├── README.md               # Dokumentasi proyek

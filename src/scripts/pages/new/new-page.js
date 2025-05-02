@@ -16,94 +16,94 @@ export default class NewPage {
   async render() {
     return `
       <section>
-        <div class="new-report__header">
-          <div class="container">
-            <h1 class="new-report__header__title">Buat Cerita Baru</h1>
-            <p class="new-report__header__description">
-              Silakan lengkapi formulir di bawah untuk membuat cerita baru.<br>
-            </p>
+      <div class="new-report__header">
+        <div class="container">
+        <h1 class="new-report__header__title">Ceritakan Momen Berharga Anda</h1>
+        <p class="new-report__header__description">
+          Bagikan pengalaman menarik dan inspiratif kepada dunia. Jadikan cerita Anda berarti!
+        </p>
+        </div>
+      </div>
+      </section>
+    
+      <section class="container">
+      <div class="new-form__container">
+        <form id="new-form" class="new-form">
+         
+        <div class="form-control">
+          <label for="description-input" class="new-form__description__title">Cerita Anda</label>
+
+          <div class="new-form__description__container">
+          <textarea
+            id="description-input"
+            name="description"
+            placeholder="Apa yang ingin Anda bagikan hari ini?"
+          ></textarea>
           </div>
         </div>
-      </section>
-  
-      <section class="container">
-        <div class="new-form__container">
-          <form id="new-form" class="new-form">
-           
-            <div class="form-control">
-              <label for="description-input" class="new-form__description__title">Cerita</label>
+        <div class="form-control">
+          <label for="documentations-input" class="new-form__documentations__title">Dokumentasi</label>
+          <div id="documentations-more-info">Abadikan momen Anda dan bagikan dengan teman-teman.</div>
 
-              <div class="new-form__description__container">
-                <textarea
-                  id="description-input"
-                  name="description"
-                  placeholder="Cerita apa yang ingin anda bagikan?."
-                ></textarea>
-              </div>
-            </div>
-            <div class="form-control">
-              <label for="documentations-input" class="new-form__documentations__title">Gambar</label>
-              <div id="documentations-more-info">Tangkap gambar dan bagikan kepada teman anda.</div>
+          <div class="new-form__documentations__container">
+          <div class="new-form__documentations__buttons">
+            <button id="documentations-input-button" class="btn btn-outline" type="button">Unggah Gambar</button>
+            <input
+            id="documentations-input"
+            class="new-form__documentations__input"
+            name="documentations"
+            type="file"
+            accept="image/*"
+            aria-multiline="true"
+            aria-describedby="documentations-more-info"
+            >
+            <button id="open-documentations-camera-button" class="btn btn-outline" type="button">
+            Gunakan Kamera
+            </button>
+          </div>
+          <div id="camera-container" class="new-form__camera__container">
+             <video id="camera-video" class="new-form__camera__video">
+              Video stream tidak tersedia.
+            </video>
 
-              <div class="new-form__documentations__container">
-                <div class="new-form__documentations__buttons">
-                  <button id="documentations-input-button" class="btn btn-outline" type="button">Ambil Gambar</button>
-                  <input
-                    id="documentations-input"
-                    class="new-form__documentations__input"
-                    name="documentations"
-                    type="file"
-                    accept="image/*"
-                    aria-multiline="true"
-                    aria-describedby="documentations-more-info"
-                  >
-                  <button id="open-documentations-camera-button" class="btn btn-outline" type="button">
-                    Buka Kamera
-                  </button>
-                </div>
-                <div id="camera-container" class="new-form__camera__container">
-                   <video id="camera-video" class="new-form__camera__video">
-                      Video stream not available.
-                    </video>
-
-                    <canvas id="camera-canvas" class="new-form__camera__canvas"></canvas>
+            <canvas id="camera-canvas" class="new-form__camera__canvas"></canvas>
 
     
-                    <div class="new-form__camera__tools">
-                      <select id="camera-select"></select>
+            <div class="new-form__camera__tools">
+              <select id="camera-select"></select>
 
-                       <div class="new-form__camera__tools_buttons">
-                      <button id="camera-take-button" class="btn" type="button">
-                        Ambil Gambar
-                      </button>
-                  </div>
-                    </div>
-                </div>
-                <ul id="documentations-taken-list" class="new-form__documentations__outputs"></ul>
-              </div>
+               <div class="new-form__camera__tools_buttons">
+              <button id="camera-take-button" class="btn" type="button">
+              Ambil Gambar
+              </button>
             </div>
-            <div class="form-control">
-              <div class="new-form__location__title">Lokasi</div>
-
-              <div class="new-form__location__container">
-                <div class="new-form__location__map__container">
-                  <div id="map" class="new-form__location__map"></div>
-                  <div id="map-loading-container"></div>
-                </div>
-                <div class="new-form__location__lat-lng">
-                   <input type="number" name="latitude" value="-6.175389" disabled>
-                <input type="number" name="longitude" value="106.827139" disabled>
-                </div>
-              </div>
             </div>
-            <div class="form-buttons">
-              <span id="submit-button-container">
-                <button class="btn" type="submit">Buat Cerita</button>
-              </span>
-              <a class="btn btn-outline" href="#/">Batal</a>
-            </div>
-          </form>
+          </div>
+          <ul id="documentations-taken-list" class="new-form__documentations__outputs"></ul>
+          </div>
         </div>
+        <div class="form-control">
+          <div class="new-form__location__title">Lokasi Anda</div>
+
+          <div class="new-form__location__container">
+          <div class="new-form__location__map__container">
+            <div id="map" class="new-form__location__map"></div>
+            <div id="map-loading-container"></div>
+          </div>
+          <div class="new-form__location__lat-lng">
+             <input type="number" name="latitude" value="-6.175389" disabled>
+          <input type="number" name="longitude" value="106.827139" disabled>
+          </div>
+          </div>
+        </div>
+        <div class="form-buttons">
+          <span id="submit-button-container">
+          <button class="btn" type="submit">Bagikan Cerita</button>
+          </span>
+          <a class="btn btn-outline" href="#/">Batal</a>
+        </div>
+        </form>
+      </div>
       </section>
     `;
   }
@@ -189,9 +189,8 @@ export default class NewPage {
 
     this.#map.addMapEventListener('click', (event) => {
       draggableMarker.setLatLng(event.latlng);
+      event.sourceTarget.flyTo(event.latlng);
     });
-
-    event.sourceTarget.flyTo(event.latlng);
   }
 
   #updateLatLngInput(latitude, longitude) {
@@ -212,10 +211,20 @@ export default class NewPage {
 
     console.log('camera', this.#camera);
 
-    this.#camera.addCheeseButtonListener('#camera-take-button', async () => {
+    this.#camera.addCheeseButtonListener('#camera-take-button', async (event) => {
       const image = await this.#camera.takePicture();
+
+      if (this.#takenDocumentations.length > 0) {
+        this.#takenDocumentations = [];
+      }
+
       await this.#addTakenPicture(image);
       await this.#populateTakenPictures();
+      document.getElementById('camera-take-button').innerHTML = 'Ambil Ulang Gambar';
+
+      document.getElementById('documentations-input-button').disabled = true;
+      // cameraContainer.classList.toggle('open');
+      // document.getElementById('open-documentations-camera-button').innerHTML = 'Buka Kamera';
     });
   }
 
@@ -254,6 +263,10 @@ export default class NewPage {
         const deleted = this.#removePicture(pictureId);
         if (!deleted) {
           console.log(`Picture with id ${pictureId} was not found`);
+        }
+
+        if (this.#takenDocumentations.length == 0) {
+          document.getElementById('camera-take-button').innerHTML = 'Ambil Gambar';
         }
 
         // Updating taken pictures
