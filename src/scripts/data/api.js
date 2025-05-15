@@ -19,9 +19,11 @@ const ENDPOINTS = {
   // Report Comment
   SUBSCRIBE: `${BASE_URL}/notifications/subscribe`,
   UNSUBSCRIBE: `${BASE_URL}/notifications/subscribe`,
-  SEND_REPORT_TO_ME: (reportId) => `${BASE_URL}/reports/${reportId}/notify-me`,
-  SEND_REPORT_TO_USER: (reportId) => `${BASE_URL}/reports/${reportId}/notify`,
-  SEND_REPORT_TO_ALL_USER: (reportId) => `${BASE_URL}/reports/${reportId}/notify-all`,
+
+  SEND_REPORT_TO_ME: (storyId) => `${BASE_URL}/stories/${storyId}/notify-me`,
+  SEND_REPORT_TO_USER: (storyId) => `${BASE_URL}/stories/${storyId}/notify`,
+  SEND_STORY_TO_ALL_USER: (storyId) => `${BASE_URL}/stories/${storyId}/notify-all`,
+
   SEND_COMMENT_TO_REPORT_OWNER: (reportId, commentId) =>
     `${BASE_URL}/reports/${reportId}/comments/${commentId}/notify`,
 };
@@ -240,10 +242,10 @@ export async function sendReportToUserViaNotification(reportId, { userId }) {
   };
 }
 
-export async function sendReportToAllUserViaNotification(reportId) {
+export async function sendStoryToAllUserViaNotification(storyId) {
   const accessToken = getAccessToken();
 
-  const fetchResponse = await fetch(ENDPOINTS.SEND_REPORT_TO_ALL_USER(reportId), {
+  const fetchResponse = await fetch(ENDPOINTS.SEND_STORY_TO_ALL_USER(storyId), {
     method: 'POST',
     headers: {
       Authorization: `Bearer ${accessToken}`,
