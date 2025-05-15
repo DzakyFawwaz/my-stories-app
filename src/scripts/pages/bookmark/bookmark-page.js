@@ -4,7 +4,7 @@ export default class BookmarkPage {
   }
 
   async afterRender() {
-    alert('Halaman laporan tersimpan akan segera hadir!');
+    alert('Halaman cerita tersimpan akan segera hadir!');
 
     location.href = '#/';
   }

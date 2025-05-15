@@ -1,0 +1,78 @@
+{
+  "id": "/#/",
+  "start_url": "/#/",
+  "scope": "/",
+  "name": "CeritaIn App",
+  "short_name": "CeritaIn",
+  "description": "A progressive web application for sharing and exploring stories.",
+  "background_color": "#FFFFFF",
+  "display": "standalone",
+  "theme_color": "#d97706",
+  "icons": [
+    {
+      "src": "images/icons/icon-x144.png",
+      "type": "image/png",
+      "sizes": "144x144",
+      "purpose": "any"
+    },
+    {
+      "src": "images/icons/maskable-icon-x48.png",
+      "type": "image/png",
+      "sizes": "48x48",
+      "purpose": "maskable"
+    },
+    {
+      "src": "images/icons/maskable-icon-x96.png",
+      "type": "image/png",
+      "sizes": "96x96",
+      "purpose": "maskable"
+    },
+    {
+      "src": "images/icons/maskable-icon-x192.png",
+      "type": "image/png",
+      "sizes": "192x192",
+      "purpose": "maskable"
+    },
+    {
+      "src": "images/icons/maskable-icon-x384.png",
+      "type": "image/png",
+      "sizes": "384x384",
+      "purpose": "maskable"
+    },
+    {
+      "src": "images/icons/maskable-icon-x512.png",
+      "type": "image/png",
+      "sizes": "512x512",
+      "purpose": "maskable"
+    }
+  ],
+  "screenshots": [
+    {
+      "src": "images/screenshots/CeritaIn_desktop.png",
+      "sizes": "1919x945",
+      "type": "image/png",
+      "form_factor": "wide"
+    },
+    {
+      "src": "images/screenshots/CeritaIn_mobile.png",
+      "sizes": "375x667",
+      "type": "image/png",
+      "form_factor": "narrow"
+    }
+  ],
+  "shortcuts": [
+    {
+      "name": "Cerita Baru",
+      "short_name": "Baru",
+      "description": "Membuat cerita kerusakan baru.",
+      "url": "/?source=pwa#/new",
+      "icons": [
+        {
+          "src": "images/icons/add-x512.png",
+          "type": "image/png",
+          "sizes": "512x512"
+        }
+      ]
+    }
+  ]
+}

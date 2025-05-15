@@ -37,8 +37,8 @@ export function generateAuthenticatedNavigationListTemplate() {
 export function generateReportsListEmptyTemplate() {
   return `
     <div id="sstories-list-empty" class="reports-list__empty">
-      <h2>Tidak ada laporan yang tersedia</h2>
-      <p>Saat ini, tidak ada laporan kerusakan fasilitas umum yang dapat ditampilkan.</p>
+      <h2>Tidak ada cerita yang tersedia</h2>
+      <p>Saat ini, tidak ada cerita kerusakan fasilitas umum yang dapat ditampilkan.</p>
     </div>
   `;
 }
@@ -55,7 +55,7 @@ export function generateReportsListErrorTemplate(message) {
 export function generateStoryDetailErrorTemplate(message) {
   return `
     <div id="reports-detail-error" class="reports-detail__error">
-      <h2>Terjadi kesalahan pengambilan detail laporan</h2>
+      <h2>Terjadi kesalahan pengambilan detail cerita</h2>
       <p>${message ? message : 'Gunakan jaringan lain atau laporkan error ini.'}</p>
     </div>
   `;
@@ -257,7 +257,7 @@ export function generateUnsubscribeButtonTemplate() {
 export function generateSaveReportButtonTemplate() {
   return `
     <button id="story-detail-save" class="btn btn-transparent">
-      Simpan laporan <i class="far fa-bookmark"></i>
+      Simpan cerita <i class="far fa-bookmark"></i>
     </button>
   `;
 }
@@ -265,7 +265,7 @@ export function generateSaveReportButtonTemplate() {
 export function generateRemoveReportButtonTemplate() {
   return `
     <button id="story-detail-remove" class="btn btn-transparent">
-      Buang laporan <i class="fas fa-bookmark"></i>
+      Buang cerita <i class="fas fa-bookmark"></i>
     </button>
   `;
 }
