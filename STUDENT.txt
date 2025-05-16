@@ -1,2 +1,2 @@
 MAP_SERVICE_API_KEY=63QM1rGGk4wXMN0UmwGQ
-DEPLOY_URL=
+DEPLOY_URL=https://dzakyfawwaz.github.io/my-stories-app
