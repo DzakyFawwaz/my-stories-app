@@ -17,9 +17,9 @@ export default class HomePage {
       <section class="container">
         <h1 class="section-title">Cerita Teman Anda</h1>
 
-        <div class="reports-list__container">
-          <div id="sstories-list"></div>
-          <div id="sstories-list-loading-container"></div>
+        <div class="stories-list__container">
+          <div id="stories-list"></div>
+          <div id="stories-list-loading-container"></div>
         </div>
       </section>
     `;
@@ -49,17 +49,17 @@ export default class HomePage {
       );
     }, '');
 
-    document.getElementById('sstories-list').innerHTML = `
-      <div class="sstories-list">${html}</div>
+    document.getElementById('stories-list').innerHTML = `
+      <div class="stories-list">${html}</div>
     `;
   }
 
   populateReportsListEmpty() {
-    document.getElementById('sstories-list').innerHTML = generateReportsListEmptyTemplate();
+    document.getElementById('stories-list').innerHTML = generateReportsListEmptyTemplate();
   }
 
   populateStoriesListError(message) {
-    document.getElementById('sstories-list').innerHTML = generateReportsListErrorTemplate(message);
+    document.getElementById('stories-list').innerHTML = generateReportsListErrorTemplate(message);
   }
 
   async initialMap() {
@@ -75,11 +75,11 @@ export default class HomePage {
   }
 
   showLoading() {
-    document.getElementById('sstories-list-loading-container').innerHTML =
+    document.getElementById('stories-list-loading-container').innerHTML =
       generateLoaderAbsoluteTemplate();
   }
 
   hideLoading() {
-    document.getElementById('sstories-list-loading-container').innerHTML = '';
+    document.getElementById('stories-list-loading-container').innerHTML = '';
   }
 }

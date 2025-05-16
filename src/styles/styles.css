@@ -15,6 +15,30 @@
   --secondary-text-color: #ffffff;
 }
 
+@keyframes full-slide-from-right {
+  from {
+    transform: translateX(100%);
+  }
+}
+
+@keyframes full-slide-to-left {
+  to {
+    transform: translateX(-100%);
+  }
+}
+
+::view-transition-old(root) {
+  animation-name: full-slide-to-left;
+  animation-duration: 900ms;
+  animation-timing-function: ease-out;
+}
+
+::view-transition-new(root) {
+  animation-name: full-slide-from-right;
+  animation-duration: 900ms;
+  animation-timing-function: ease-out;
+}
+
 body {
   font-family: 'Inter', sans-serif;
 }
@@ -228,7 +252,7 @@ header {
   box-shadow: 0 1px 4px 0 #00000055;
   z-index: 9999;
 
-  view-transition-name: main-header;
+  view-transition-name: header;
 }
 
 .header-content {
@@ -358,7 +382,7 @@ header {
 }
 
 .main-content .section-title {
-  text-align: start;
+  text-align: center;
   font-size: 2.5rem;
   padding-block: 50px 40px;
 }
@@ -396,32 +420,32 @@ header {
 /* END OF LOGIN, REGISTER PAGE */
 
 /* HOME PAGE */
-.reports-list__map__container,
-.reports-list__map {
+.stories-list__map__container,
+.stories-list__map {
   height: 400px;
 }
 
-.reports-list__container {
+.stories-list__container {
   min-height: 400px;
 }
 
-.reports-list__map__container,
-.reports-list__container {
+.stories-list__map__container,
+.stories-list__container {
   position: relative;
 }
 
-.reports-list__map__container {
+.stories-list__map__container {
   background-color: darkgray;
 }
 
-.sstories-list {
+.stories-list {
   display: grid;
   grid-template-columns: repeat(1, minmax(300px, 1fr));
   gap: 20px 15px;
 }
 
-.reports-list__empty,
-.reports-list__error {
+.stories-list__empty,
+.stories-list__error {
   text-align: center;
 }
 
@@ -492,7 +516,7 @@ header {
 
 /* DETAIL PAGE */
 .report-detail__container,
-.story-detail {
+.report-detail {
   position: relative;
   min-height: 80vh;
 }
@@ -500,7 +524,6 @@ header {
 .report-detail__header {
   padding-block: 80px;
   min-height: 600px;
-  /* background-image: var(--primary-color); */
   background-image: url('../public/images/orange-background.png');
   background-repeat: no-repeat;
   background-size: cover;
@@ -758,7 +781,7 @@ header {
 /* NEW REPORT FORM */
 .new-report__header {
   padding-block: 70px;
-  /* background-color: #d9770626; */
+  background-color: #d9770626;
   background-image: url('../public/images/orange-background.png');
   background-repeat: no-repeat;
   background-size: cover;
@@ -811,10 +834,6 @@ header {
   display: flex;
   flex-direction: column;
   gap: 10px;
-}
-
-.new-form__documentations__input {
-  display: none;
 }
 
 .new-form__camera__container {
@@ -917,37 +936,4 @@ footer {
 
 .copyright {
   text-align: center;
-}
-
-.guest-login {
-  text-align: center;
-}
-
-@keyframes move-out {
-  from {
-    transform: translateX(0%);
-  }
-
-  to {
-    transform: translateX(-100%);
-  }
-}
-
-@keyframes move-in {
-  from {
-    transform: translateX(100%);
-  }
-  to {
-    transform: translateX(0%);
-  }
-}
-
-::view-transition-old(root) {
-  animation-name: move-out;
-  animation-duration: 500ms;
-}
-
-::view-transition-new(root) {
-  animation-name: move-in;
-  animation-duration: 500ms;
 }

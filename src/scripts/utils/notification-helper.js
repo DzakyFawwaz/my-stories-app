@@ -37,7 +37,9 @@ export async function requestNotificationPermission() {
 
 export async function getPushSubscription() {
   const registration = await navigator.serviceWorker.getRegistration();
-  return await registration.pushManager.getSubscription();
+  if (registration && registration?.pushManager) {
+    return await registration.pushManager.getSubscription();
+  } else return false; 
 }
 
 export async function isCurrentPushSubscriptionAvailable() {

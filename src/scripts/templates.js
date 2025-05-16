@@ -15,6 +15,8 @@ export function generateLoaderAbsoluteTemplate() {
 export function generateMainNavigationListTemplate() {
   return `
     <li><a id="report-list-button" class="report-list-button" href="#/">Daftar Cerita</a></li>
+    <li><a id="bookmark-button" class="bookmark-button" href="#/bookmark">Laporan Tersimpan</a></li>
+
   `;
 }
 
@@ -36,7 +38,7 @@ export function generateAuthenticatedNavigationListTemplate() {
 
 export function generateReportsListEmptyTemplate() {
   return `
-    <div id="sstories-list-empty" class="reports-list__empty">
+    <div id="stories-list-empty" class="stories-list__empty">
       <h2>Tidak ada cerita yang tersedia</h2>
       <p>Saat ini, tidak ada cerita kerusakan fasilitas umum yang dapat ditampilkan.</p>
     </div>
@@ -45,7 +47,7 @@ export function generateReportsListEmptyTemplate() {
 
 export function generateReportsListErrorTemplate(message) {
   return `
-    <div id="sstories-list-error" class="reports-list__error">
+    <div id="stories-list-error" class="stories-list__error">
       <h2>Terjadi kesalahan pengambilan daftar cerita</h2>
       <p>${message ? message : 'Gunakan jaringan lain atau laporkan error ini.'}</p>
     </div>
@@ -231,7 +233,19 @@ export function generateStoryDetailTemplate({
               </div>
             </div>
      
-  
+          <hr>
+    
+          <div class="report-detail__body__actions__container">
+            <h2>Aksi</h2>
+            <div class="report-detail__actions__buttons">
+              <div id="save-actions-container"></div>
+              <div id="notify-me-actions-container">
+                <button id="report-detail-notify-me" class="btn btn-transparent">
+                  Try Notify Me <i class="far fa-bell"></i>
+                </button>
+              </div>
+            </div>
+          </div>
        
       </div>
     </div>

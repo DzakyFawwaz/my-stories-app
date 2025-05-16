@@ -13,6 +13,7 @@ import Map from '../../utils/map';
 import ReportDetailPresenter from './story-detail-presenter';
 import { parseActivePathname } from '../../routes/url-parser';
 import * as CityCareAPI from '../../data/api';
+import Database from '../../data/database';
 
 export default class ReportDetailPage {
   #presenter = null;
@@ -36,6 +37,7 @@ export default class ReportDetailPage {
     this.#presenter = new ReportDetailPresenter(parseActivePathname().id, {
       view: this,
       apiModel: CityCareAPI,
+      dbModel: Database,
     });
 
     this.#presenter.showReportDetail();
@@ -68,7 +70,7 @@ export default class ReportDetailPage {
     }
 
     // Actions buttons
-    // this.#presenter.showSaveButton();
+    this.#presenter.showSaveButton();
     // this.addNotifyMeEventListener();
   }
 
@@ -142,12 +144,20 @@ export default class ReportDetailPage {
     this.#form.reset();
   }
 
+  saveToBookmarkSuccessfully(message) {
+    console.log(message);
+  }
+  saveToBookmarkFailed(message) {
+    alert(message);
+  }
+
   renderSaveButton() {
     document.getElementById('save-actions-container').innerHTML =
       generateSaveReportButtonTemplate();
 
     document.getElementById('story-detail-save').addEventListener('click', async () => {
-      alert('Fitur simpan cerita akan segera hadir!');
+      await this.#presenter.saveReport();
+      await this.#presenter.showSaveButton();
     });
   }
 
@@ -156,7 +166,8 @@ export default class ReportDetailPage {
       generateRemoveReportButtonTemplate();
 
     document.getElementById('story-detail-remove').addEventListener('click', async () => {
-      alert('Fitur simpan cerita akan segera hadir!');
+      await this.#presenter.removeReport();
+      await this.#presenter.showSaveButton();
     });
   }
 
@@ -165,6 +176,13 @@ export default class ReportDetailPage {
       this.#presenter.notifyMe();
       // alert('Fitur notifikasi cerita akan segera hadir!');
     });
+  }
+
+  removeFromBookmarkSuccessfully(message) {
+    console.log(message);
+  }
+  removeFromBookmarkFailed(message) {
+    alert(message);
   }
 
   showReportDetailLoading() {

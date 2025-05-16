@@ -32,12 +32,12 @@
 
 @media screen and (width > 800px) {
   /* MAIN */
-  .reports-list__map__container,
-  .reports-list__map {
+  .stories-list__map__container,
+  .stories-list__map {
     height: 500px;
   }
 
-  .sstories-list {
+  .stories-list {
     grid-template-columns: repeat(2, minmax(300px, 1fr));
   }
 
@@ -94,12 +94,12 @@
   }
 
   /* MAIN */
-  .reports-list__map__container,
-  .reports-list__map {
+  .stories-list__map__container,
+  .stories-list__map {
     height: 600px;
   }
 
-  .sstories-list {
+  .stories-list {
     grid-template-columns: repeat(3, minmax(300px, 1fr));
   }
 

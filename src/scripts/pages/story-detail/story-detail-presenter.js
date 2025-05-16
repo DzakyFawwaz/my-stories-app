@@ -1,14 +1,16 @@
 import { storyMapper } from '../../data/api-mapper';
 
 export default class ReportDetailPresenter {
-  #reportId;
+  #storyId;
   #view;
   #apiModel;
+  #dbModel;
 
-  constructor(reportId, { view, apiModel }) {
-    this.#reportId = reportId;
+  constructor(reportId, { view, apiModel, dbModel }) {
+    this.#storyId = reportId;
     this.#view = view;
     this.#apiModel = apiModel;
+    this.#dbModel = dbModel;
   }
 
   async showReportDetailMap() {
@@ -25,7 +27,7 @@ export default class ReportDetailPresenter {
   async showReportDetail() {
     this.#view.showReportDetailLoading();
     try {
-      const response = await this.#apiModel.getStoryById(this.#reportId);
+      const response = await this.#apiModel.getStoryById(this.#storyId);
 
       if (!response.ok) {
         console.error('showReportDetailAndMap: response:', response);
@@ -49,7 +51,7 @@ export default class ReportDetailPresenter {
   async getCommentsList() {
     this.#view.showCommentsLoading();
     try {
-      const response = await this.#apiModel.getAllCommentsByReportId(this.#reportId);
+      const response = await this.#apiModel.getAllCommentsByReportId(this.#storyId);
       this.#view.populateReportDetailComments(response.message, response.data);
     } catch (error) {
       console.error('getCommentsList: error:', error);
@@ -62,7 +64,7 @@ export default class ReportDetailPresenter {
   async postNewComment({ body }) {
     this.#view.showSubmitLoadingButton();
     try {
-      const response = await this.#apiModel.storeNewCommentByReportId(this.#reportId, { body });
+      const response = await this.#apiModel.storeNewCommentByReportId(this.#storyId, { body });
 
       if (!response.ok) {
         console.error('postNewComment: response:', response);
@@ -81,7 +83,7 @@ export default class ReportDetailPresenter {
 
   async notifyMe() {
     try {
-      const response = await this.#apiModel.sendReportToMeViaNotification(this.#reportId);
+      const response = await this.#apiModel.sendReportToMeViaNotification(this.#storyId);
       if (!response.ok) {
         console.error('notifyMe: response:', response);
         return;
@@ -92,16 +94,37 @@ export default class ReportDetailPresenter {
     }
   }
 
-  showSaveButton() {
-    if (this.#isReportSaved()) {
+  async saveReport() {
+    try {
+      const response = await this.#apiModel.getStoryById(this.#storyId);
+      console.log({ response });
+      await this.#dbModel.putReport(response.story);
+      this.#view.saveToBookmarkSuccessfully('Success to save to bookmark');
+    } catch (error) {
+      console.error('saveReport: error:', error);
+      this.#view.saveToBookmarkFailed(error.message);
+    }
+  }
+
+  async removeReport() {
+    try {
+      await this.#dbModel.removeReport(this.#storyId);
+      this.#view.removeFromBookmarkSuccessfully('Success to remove from bookmark');
+    } catch (error) {
+      console.error('removeReport: error:', error);
+      this.#view.removeFromBookmarkFailed(error.message);
+    }
+  }
+
+  async showSaveButton() {
+    if (await this.#isReportSaved()) {
       this.#view.renderRemoveButton();
       return;
     }
-
     this.#view.renderSaveButton();
   }
 
-  #isReportSaved() {
-    return false;
+  async #isReportSaved() {
+    return !!(await this.#dbModel.getReportById(this.#storyId));
   }
 }
