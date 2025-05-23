@@ -39,7 +39,7 @@ export async function getPushSubscription() {
   const registration = await navigator.serviceWorker.getRegistration();
   if (registration && registration?.pushManager) {
     return await registration.pushManager.getSubscription();
-  } else return false; 
+  } else return false;
 }
 
 export async function isCurrentPushSubscriptionAvailable() {
@@ -101,17 +101,16 @@ export async function unsubscribe() {
       alert('Tidak bisa memutus langganan push notification karena belum berlangganan sebelumnya.');
       return;
     }
-    const { endpoint, keys } = pushSubscription.toJSON();
+    const { endpoint } = pushSubscription.toJSON();
+    const unsubscribed = await pushSubscription.unsubscribe();
+    if (!unsubscribed) {
+      alert(failureUnsubscribeMessage);
+      return;
+    }
     const response = await unsubscribePushNotification({ endpoint });
     if (!response.ok) {
       alert(failureUnsubscribeMessage);
       console.error('unsubscribe: response:', response);
-      return;
-    }
-    const unsubscribed = await pushSubscription.unsubscribe();
-    if (!unsubscribed) {
-      alert(failureUnsubscribeMessage);
-      await subscribePushNotification({ endpoint, keys });
       return;
     }
     alert(successUnsubscribeMessage);

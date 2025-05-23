@@ -86,7 +86,13 @@ export default class App {
 
   async #setupPushNotification() {
     const pushNotificationTools = document.getElementById('push-notification-tools');
+
     pushNotificationTools.innerHTML = generateSubscribeButtonTemplate();
+    document.getElementById('subscribe-button').addEventListener('click', () => {
+      subscribe().finally(() => {
+        this.#setupPushNotification();
+      });
+    });
 
     const isSubscribed = await isCurrentPushSubscriptionAvailable();
 
@@ -100,12 +106,6 @@ export default class App {
 
       return;
     }
-
-    document.getElementById('subscribe-button').addEventListener('click', () => {
-      subscribe().finally(() => {
-        this.#setupPushNotification();
-      });
-    });
   }
 
   async renderPage() {

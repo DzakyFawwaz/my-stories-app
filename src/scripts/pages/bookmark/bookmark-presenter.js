@@ -31,8 +31,6 @@ export default class BookmarkPresenter {
       const listOfReports = await this.#model.getAllReports();
       const reports = await Promise.all(listOfReports.map(storyMapper));
 
-      console.log({ reports });
-
       const message = 'Berhasil mendapatkan daftar laporan tersimpan.';
       this.#view.populateBookmarkedReports(message, reports);
     } catch (error) {

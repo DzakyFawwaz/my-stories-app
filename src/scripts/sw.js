@@ -74,12 +74,24 @@ registerRoute(
 
 self.addEventListener('push', (event) => {
   console.log('Service worker pushing...');
+  console.log({ event });
 
   async function chainPromise() {
-    const data = await event.data.json();
-    await self.registration.showNotification(data.title, {
-      body: data.options.body,
-    });
+    try {
+      data = await event.data.json();
+      console.log({ data });
+      await self.registration.showNotification(data?.title || data?.name, {
+        body: data.options.body,
+      });
+    } catch (e) {
+      // Fallback for non-JSON push data
+      const text = await event.data.text();
+      console.log({ text });
+
+      await self.registration.showNotification('Ada cerita baru untuk Anda!', {
+        body: text,
+      });
+    }
   }
 
   event.waitUntil(chainPromise());

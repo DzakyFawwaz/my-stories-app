@@ -84,18 +84,19 @@ export function generateCommentsListErrorTemplate(message) {
 export function generateReportItemTemplate({
   id,
   title,
+  name,
   description,
   photoUrl,
-  storyName,
+  reporterName,
   createdAt,
   location,
 }) {
   return `
     <div tabindex="0" class="report-item" data-reportid="${id}">
-      <img class="report-item__image" src="${photoUrl}" alt="${storyName}">
+      <img class="report-item__image" src="${photoUrl}" alt="${name}">
       <div class="report-item__body">
         <div class="report-item__main">
-          <h2 id="report-title" class="report-item__title">${storyName}</h2>
+          <h2 id="report-title" class="report-item__title">${name}</h2>
           <div class="report-item__more-info">
             <div class="report-item__createdat">
               <i class="fas fa-calendar-alt"></i> ${showFormattedDate(createdAt, 'id-ID')}

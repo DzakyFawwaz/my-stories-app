@@ -42,7 +42,8 @@ export default class BookmarkPage {
   }
 
   populateBookmarkedReports(message, reports) {
-    console.log({ reports });
+    console.log('POPULATE', { reports });
+
     if (reports.length <= 0) {
       this.populateBookmarkedReportsListEmpty();
       return;
@@ -55,6 +56,8 @@ export default class BookmarkPage {
         const popupOptions = { content: report.name };
         this.#map.addMarker(coordinate, markerOptions, popupOptions);
       }
+
+      console.log({ report });
 
       return accumulator.concat(
         generateReportItemTemplate({
